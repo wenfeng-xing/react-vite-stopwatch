@@ -14,7 +14,7 @@ const ContainerApp = styled.div`
 `
 
 const Container = styled.div`
-  border-radius: 5%;
+  border-radius: 1rem;
   height: 667px;
   width: 375px;
   background-color: black;
