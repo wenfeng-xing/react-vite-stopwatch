@@ -4,11 +4,13 @@ const WrapperControls = styled.section`
     flex: 1 1 15vh;
     width: 375px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
 `
 
 const Button = styled.button`
     & {
+        margin: 0 10px;
         height: 5rem;
         width: 5rem;
         border-radius: 100%;

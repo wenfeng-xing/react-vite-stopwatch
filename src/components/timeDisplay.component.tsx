@@ -5,6 +5,7 @@ const WrapperTimeDisplay = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 5.5rem;
 `
 
 export default function TimeDisplay() {
