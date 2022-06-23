@@ -12,9 +12,13 @@ const WrapperLapsList = styled.div`
 `
 
 const ElementLi = styled.div`
+    font-size: 1rem;
     flex: 0 0 30px;
     width: 350px;
     border-bottom: white 0.5px solid;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 `
 
 export default function LapsList() {

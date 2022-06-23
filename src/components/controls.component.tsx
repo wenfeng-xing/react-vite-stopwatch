@@ -14,6 +14,7 @@ const Button = styled.button`
         height: 5rem;
         width: 5rem;
         border-radius: 100%;
+        font-size: 1rem;
     }
     &:hover {
         background-color: yellow;
