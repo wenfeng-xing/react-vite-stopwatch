@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import TimeDisplay from './components/timeDisplay.component'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -6,9 +7,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <section className="wrapper-time-display">
-          <p>00:00.00</p>
-        </section>
+        <TimeDisplay />
         <section className="wrapper-controls">
           <button>Laps</button>
           <button>Start</button>
