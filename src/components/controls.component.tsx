@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const WrapperControls = styled.section`
-    flex: 1 1 15vh;
+    flex: 1 1 15%;
     width: 375px;
     display: flex;
     justify-content: space-between;
