@@ -1,5 +1,5 @@
 import styled from "styled-components"
-
+import { TimerState } from "./stopwatch.container"
 const WrapperControls = styled.section`
   flex: 1 1 15%;
   width: 375px;
@@ -57,11 +57,25 @@ const RightButton = styled.button`
   }
 `
 
-export default function Controls() {
+interface ControlsProps {
+  handleStartStopClick: () => void
+  handleLapResetClick: () => void
+  timerState: TimerState
+}
+
+export default function Controls({
+  handleStartStopClick,
+  handleLapResetClick,
+  timerState,
+}: ControlsProps) {
   return (
     <WrapperControls>
-      <LeftButton>Laps</LeftButton>
-      <RightButton>Start</RightButton>
+      <LeftButton onClick={handleLapResetClick}>
+        {timerState === "stop" ? "Reset" : "Laps"}
+      </LeftButton>
+      <RightButton onClick={handleStartStopClick}>
+        {timerState === "initial" || timerState === "stop" ? "Start" : "Stop"}
+      </RightButton>
     </WrapperControls>
   )
 }
