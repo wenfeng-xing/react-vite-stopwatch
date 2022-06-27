@@ -1,8 +1,5 @@
-
-import Controls from './components/controls.component'
-import TimeDisplay from './components/timeDisplay.component'
-import styled from "styled-components";
-import LapsList from './components/lapsList.component';
+import StopWatch from "./components/stopwatch.container"
+import styled from "styled-components"
 
 const ContainerApp = styled.div`
   height: 100vh;
@@ -13,27 +10,11 @@ const ContainerApp = styled.div`
   align-items: center;
 `
 
-const Container = styled.div`
-  border-radius: 1rem;
-  height: 667px;
-  width: 375px;
-  background-color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`
-
 function App() {
-
   return (
     <ContainerApp>
-      <Container>
-        <TimeDisplay />
-        <Controls />
-        <LapsList />
-      </Container>
-    </ContainerApp >
+      <StopWatch />
+    </ContainerApp>
   )
 }
 
