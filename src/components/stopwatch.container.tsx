@@ -25,13 +25,13 @@ export default function StopWatch() {
     setTimerStateAndTimes,
     updateLapStartTime,
   } = useTimer()
-  const [lapsRecordList, setlapsRecordList] = useState<number[]>([])
+  const [lapsRecordList, setLapsRecordList] = useState<number[]>([])
 
   useEffect(() => {
     if (lapRecord !== 0) {
       let temp: number[] = lapsRecordList
       temp[0] = lapRecord
-      setlapsRecordList([...temp])
+      setLapsRecordList([...temp])
     }
   }, [lapRecord])
 
@@ -57,11 +57,11 @@ export default function StopWatch() {
       case "start":
       case "restart":
         updateLapStartTime()
-        setlapsRecordList([0, ...lapsRecordList])
+        setLapsRecordList([0, ...lapsRecordList])
         break
       case "pause":
         setTimerStateAndTimes("stop")
-        setlapsRecordList([])
+        setLapsRecordList([])
         break
     }
   }

@@ -7,7 +7,7 @@ const WrapperTimeDisplay = styled.section`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  font-size: 5.5rem;
+  font-size: 5rem;
   font-variant-numeric: tabular-nums;
 `
 

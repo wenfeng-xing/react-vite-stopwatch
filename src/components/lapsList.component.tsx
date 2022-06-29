@@ -41,13 +41,14 @@ const LapElement = styled.div<LapElementProps>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-variant-numeric: tabular-nums;
   }
   & p {
     margin: 0;
     color: ${(props) => setColor(props?.record)};
   }
 `
-const placeHolding = ["", "", "", "", "", "", ""]
+const placeHolding = ["", "", "", "", "", ""]
 
 interface LapsListProps {
   lapsList: Array<string | number>
