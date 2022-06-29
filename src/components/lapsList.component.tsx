@@ -54,14 +54,18 @@ interface LapsListProps {
 }
 
 export default function LapsList({ lapsList }: LapsListProps) {
+  const lapsListToDisplay = useMemo(() => {
+    return lapsList.length < 6 ? [...lapsList, ...placeHolding] : lapsList
+  }, [lapsList])
+
   return (
     <WrapperLapsList>
-      {lapsList.map((element, index) => {
+      {lapsListToDisplay.map((element, index) => {
         return element === "" ? (
           <LapElement key={index}></LapElement>
         ) : (
           <LapElement key={index}>
-            <p>{`Lap ${index}`}</p>
+            <p>{`Lap ${lapsList.length - index}`}</p>
             <p>{formatTimeToText(element as number)}</p>
           </LapElement>
         )
