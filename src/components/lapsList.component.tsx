@@ -15,7 +15,24 @@ const WrapperLapsList = styled.div`
   }
 `
 
-const LapElement = styled.div`
+type RecordType = "BEST" | "WORST"
+
+const setColor = (record?: RecordType) => {
+  switch (record) {
+    case "BEST":
+      return "green"
+    case "WORST":
+      return "red"
+    default:
+      return "white"
+  }
+}
+
+interface LapElementProps {
+  record?: RecordType
+}
+
+const LapElement = styled.div<LapElementProps>`
   & {
     font-size: 1rem;
     flex: 0 0 2rem;
@@ -27,6 +44,7 @@ const LapElement = styled.div`
   }
   & p {
     margin: 0;
+    color: ${(props) => setColor(props?.record)};
   }
 `
 const placeHolding = ["", "", "", "", "", "", ""]
