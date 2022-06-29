@@ -29,27 +29,21 @@ const LapElement = styled.div`
     margin: 0;
   }
 `
-const placeHolding = [-1, -1, -1, -1, -1, -1]
+const placeHolding = ["", "", "", "", "", "", ""]
 
 interface LapsListProps {
-  lapsList: Array<number>
+  lapsList: Array<string | number>
 }
 
 export default function LapsList({ lapsList }: LapsListProps) {
-  const lapsListToDisplay = useMemo(
-    () =>
-      lapsList.length < 6 ? [...lapsList, ...placeHolding] : [...lapsList],
-    [lapsList.length]
-  )
-
   return (
     <WrapperLapsList>
-      {lapsListToDisplay.map((element, index) => {
-        return element === -1 ? (
+      {lapsList.map((element, index) => {
+        return element === "" ? (
           <LapElement key={index}></LapElement>
         ) : (
           <LapElement key={index}>
-            <p>{`Lap ${lapsList.length - index}`}</p>
+            <p>{`Lap ${index}`}</p>
             <p>{formatTimeToText(element as number)}</p>
           </LapElement>
         )
