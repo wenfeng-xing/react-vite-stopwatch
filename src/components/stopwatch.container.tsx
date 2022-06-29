@@ -2,7 +2,9 @@ import Controls from "./controls.component"
 import TimeDisplay from "./timeDisplay.component"
 import styled from "styled-components"
 import LapsList from "./lapsList.component"
+
 import { useEffect, useState } from "react"
+import useTimer from "../hooks/useTimer.hook"
 
 const Container = styled.div`
   border-radius: 1rem;
@@ -15,21 +17,37 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-export type TimerState = "initial" | "start" | "stop"
-
 export default function StopWatch() {
-  const [timerState, setTimerState] = useState<TimerState>("initial")
+  const {
+    timePassed,
+    lapRecord,
+    timerState,
+    setTimerStateAndTimes,
+    updateLapStartTime,
+  } = useTimer()
+  const [lapsRecordList, setlapsRecordList] = useState<number[]>([])
+
+  useEffect(() => {
+    if (lapRecord !== 0) {
+      let temp: number[] = lapsRecordList
+      temp[0] = lapRecord
+      setlapsRecordList([...temp])
+    }
+  }, [lapRecord])
 
   const handleStartStopClick = () => {
     switch (timerState) {
-      case "initial":
-        setTimerState("start")
+      case "stop":
+        setTimerStateAndTimes("start")
         break
       case "start":
-        setTimerState("stop")
+        setTimerStateAndTimes("pause")
         break
-      case "stop":
-        setTimerState("start")
+      case "pause":
+        setTimerStateAndTimes("restart")
+        break
+      case "restart":
+        setTimerStateAndTimes("pause")
         break
     }
   }
@@ -37,22 +55,26 @@ export default function StopWatch() {
   const handleLapResetClick = () => {
     switch (timerState) {
       case "start":
+      case "restart":
+        updateLapStartTime()
+        setlapsRecordList([0, ...lapsRecordList])
         break
-      case "stop":
-        setTimerState("initial")
+      case "pause":
+        setTimerStateAndTimes("stop")
+        setlapsRecordList([])
         break
     }
   }
 
   return (
     <Container>
-      <TimeDisplay time={0} />
+      <TimeDisplay time={timePassed} />
       <Controls
         handleStartStopClick={handleStartStopClick}
         handleLapResetClick={handleLapResetClick}
         timerState={timerState}
       />
-      <LapsList />
+      <LapsList lapsList={lapsRecordList} />
     </Container>
   )
 }

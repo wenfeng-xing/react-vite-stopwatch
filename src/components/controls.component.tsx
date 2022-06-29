@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import { TimerState } from "./stopwatch.container"
+import { TimerState } from "../hooks/useTimer.hook"
+
 const WrapperControls = styled.section`
   flex: 1 1 15%;
   width: 375px;
@@ -8,37 +9,41 @@ const WrapperControls = styled.section`
   align-items: center;
 `
 
-const LeftButton = styled.button`
+const BasicButton = styled.button`
   & {
     margin: 0 10px;
     height: 5rem;
     width: 5rem;
     border-radius: 100%;
     font-size: 1rem;
-    outline: rgb(51, 51, 51) solid 2px;
-    border: 3px solid black;
-    background-color: rgb(51, 51, 51);
-    color: rgb(240, 160, 80);
   }
   &:hover {
-    background-color: rgb(81, 81, 81);
     width: 5.2rem;
     height: 5.2rem;
   }
   &:active {
     width: 4.8rem;
     height: 4.8rem;
+  }
+`
+
+const LeftButton = styled(BasicButton)`
+  & {
+    outline: rgb(51, 51, 51) solid 2px;
+    border: 3px solid black;
+    background-color: rgb(51, 51, 51);
+    color: white;
+  }
+  &:hover {
+    background-color: rgb(81, 81, 81);
+  }
+  &:active {
     background-color: rgb(26, 26, 26);
   }
 `
 
-const RightButton = styled.button`
+const RightButton = styled(BasicButton)`
   & {
-    margin: 0 10px;
-    height: 5rem;
-    width: 5rem;
-    border-radius: 100%;
-    font-size: 1rem;
     outline: rgb(49, 33, 7) solid 2px;
     border: 3px solid black;
     background-color: rgb(49, 33, 7);
@@ -46,12 +51,8 @@ const RightButton = styled.button`
   }
   &:hover {
     background-color: rgb(79, 63, 37);
-    width: 5.2rem;
-    height: 5.2rem;
   }
   &:active {
-    width: 4.8rem;
-    height: 4.8rem;
     background-color: rgb(25, 16, 4);
     color: rgb(221, 87, 81);
   }
@@ -68,13 +69,20 @@ export default function Controls({
   handleLapResetClick,
   timerState,
 }: ControlsProps) {
+  const getButtonStartOrStop = (timerState: TimerState) =>
+    timerState === "pause" || timerState === "stop" ? "Start" : "Stop"
+  const getButtonLapsOrReset = (timerState: TimerState) =>
+    timerState === "start" || timerState === "stop" || timerState === "restart"
+      ? "Laps"
+      : "Reset"
+
   return (
     <WrapperControls>
       <LeftButton onClick={handleLapResetClick}>
-        {timerState === "stop" ? "Reset" : "Laps"}
+        {getButtonLapsOrReset(timerState)}
       </LeftButton>
       <RightButton onClick={handleStartStopClick}>
-        {timerState === "initial" || timerState === "stop" ? "Start" : "Stop"}
+        {getButtonStartOrStop(timerState)}
       </RightButton>
     </WrapperControls>
   )
