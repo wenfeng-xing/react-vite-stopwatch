@@ -3,7 +3,6 @@ import TimeDisplay from "./timeDisplay.component"
 import styled from "styled-components"
 import LapsList from "./lapsList.component"
 
-import { useEffect, useState } from "react"
 import useTimer from "../hooks/useTimer.hook"
 
 const Container = styled.div`
@@ -44,79 +43,21 @@ function getWorstLapRecordIndex(
 }
 
 export default function StopWatch() {
-  const {
-    timePassed,
-    lapRecord,
-    timerState,
-    setTimerStateAndTimes,
-    updateLapStartTime,
-  } = useTimer()
-  const [lapsRecordList, setLapsRecordList] = useState<number[]>([])
-  const [bestLapRecordIndex, setBestLapRecordIndex] = useState<number>(-1)
-  const [worstLapRecordIndex, setWorstLapRecordIndex] = useState<number>(-1)
-
-  useEffect(() => {
-    if (lapRecord !== 0) {
-      let temp: number[] = lapsRecordList
-      temp[0] = lapRecord
-      setLapsRecordList([...temp])
-    }
-  }, [lapRecord])
-
-  const handleStartStopClick = () => {
-    switch (timerState) {
-      case "stop":
-        setTimerStateAndTimes("start")
-        break
-      case "start":
-        setTimerStateAndTimes("pause")
-        break
-      case "pause":
-        setTimerStateAndTimes("restart")
-        break
-      case "restart":
-        setTimerStateAndTimes("pause")
-        break
-    }
-  }
-
-  const handleLapResetClick = () => {
-    switch (timerState) {
-      case "start":
-      case "restart":
-        updateLapStartTime()
-        const currentBestLapRecordIndex = getBestLapRecordIndex(
-          lapsRecordList,
-          bestLapRecordIndex
-        )
-        const currentWorstLapRecordIndex = getWorstLapRecordIndex(
-          lapsRecordList,
-          worstLapRecordIndex
-        )
-        setLapsRecordList([0, ...lapsRecordList])
-        setBestLapRecordIndex(currentBestLapRecordIndex + 1)
-        setWorstLapRecordIndex(currentWorstLapRecordIndex + 1)
-        break
-      case "pause":
-        setTimerStateAndTimes("stop")
-        setLapsRecordList([])
-        setBestLapRecordIndex(-1)
-        break
-    }
-  }
+  const { timerState, handleClickStartStopButton, handleClickLapResetButton } =
+    useTimer()
 
   return (
     <Container>
-      <TimeDisplay time={timePassed} />
+      <TimeDisplay time={1000000} />
       <Controls
-        handleStartStopClick={handleStartStopClick}
-        handleLapResetClick={handleLapResetClick}
+        handleStartStopClick={handleClickStartStopButton}
+        handleLapResetClick={handleClickLapResetButton}
         timerState={timerState}
       />
       <LapsList
-        lapsList={lapsRecordList}
-        bestLapRecordIndex={bestLapRecordIndex}
-        worstLapRecordIndex={worstLapRecordIndex}
+        lapsList={[]}
+        bestLapRecordIndex={-1}
+        worstLapRecordIndex={-1}
       />
     </Container>
   )

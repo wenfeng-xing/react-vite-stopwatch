@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { TimerState } from "../hooks/useTimer.hook"
+import { internalState } from "../store/timer.store"
 
 const WrapperControls = styled.section`
   flex: 1 1 15%;
@@ -61,7 +61,7 @@ const RightButton = styled(BasicButton)`
 interface ControlsProps {
   handleStartStopClick: () => void
   handleLapResetClick: () => void
-  timerState: TimerState
+  timerState: internalState
 }
 
 export default function Controls({
@@ -69,9 +69,9 @@ export default function Controls({
   handleLapResetClick,
   timerState,
 }: ControlsProps) {
-  const getButtonStartOrStop = (timerState: TimerState) =>
+  const getButtonStartOrStop = (timerState: internalState) =>
     timerState === "pause" || timerState === "stop" ? "Start" : "Stop"
-  const getButtonLapsOrReset = (timerState: TimerState) =>
+  const getButtonLapsOrReset = (timerState: internalState) =>
     timerState === "start" || timerState === "stop" || timerState === "restart"
       ? "Laps"
       : "Reset"
