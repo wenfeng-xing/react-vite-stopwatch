@@ -15,7 +15,7 @@ const WrapperLapsList = styled.div`
   }
 `
 
-type RecordType = "BEST" | "WORST"
+type RecordType = "BEST" | "WORST" | null
 
 const setColor = (record?: RecordType) => {
   switch (record) {
@@ -48,13 +48,35 @@ const LapElement = styled.div<LapElementProps>`
     color: ${(props) => setColor(props?.record)};
   }
 `
+
+function highlightBestWorstLapRecord(
+  bestLapRecordIndex: number,
+  worstLapRecordIndex: number,
+  currentIndex: number
+): RecordType {
+  console.log("worst record lap", worstLapRecordIndex)
+  if (bestLapRecordIndex === currentIndex) {
+    return "BEST"
+  }
+  if (worstLapRecordIndex === currentIndex) {
+    return "WORST"
+  }
+  return null
+}
+
 const placeHolding = ["", "", "", "", "", ""]
 
 interface LapsListProps {
   lapsList: Array<string | number>
+  bestLapRecordIndex: number
+  worstLapRecordIndex: number
 }
 
-export default function LapsList({ lapsList }: LapsListProps) {
+export default function LapsList({
+  lapsList,
+  bestLapRecordIndex,
+  worstLapRecordIndex,
+}: LapsListProps) {
   const lapsListToDisplay = useMemo(() => {
     return lapsList.length < 6 ? [...lapsList, ...placeHolding] : lapsList
   }, [lapsList])
@@ -65,7 +87,14 @@ export default function LapsList({ lapsList }: LapsListProps) {
         return element === "" ? (
           <LapElement key={index}></LapElement>
         ) : (
-          <LapElement key={index}>
+          <LapElement
+            key={index}
+            record={highlightBestWorstLapRecord(
+              bestLapRecordIndex,
+              worstLapRecordIndex,
+              index
+            )}
+          >
             <p>{`Lap ${lapsList.length - index}`}</p>
             <p>{formatTimeToText(element as number)}</p>
           </LapElement>

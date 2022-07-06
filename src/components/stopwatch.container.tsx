@@ -17,6 +17,32 @@ const Container = styled.div`
   flex-direction: column;
 `
 
+function getBestLapRecordIndex(
+  lapsRecordList: number[],
+  currentBestLapRecordIndex: number
+): number {
+  if (currentBestLapRecordIndex !== -1) {
+    return lapsRecordList[0] < lapsRecordList[currentBestLapRecordIndex]
+      ? 0
+      : currentBestLapRecordIndex
+  }
+
+  return 0
+}
+
+function getWorstLapRecordIndex(
+  lapsRecordList: number[],
+  currentWorstLapRecordIndex: number
+): number {
+  if (currentWorstLapRecordIndex !== -1) {
+    return lapsRecordList[0] > lapsRecordList[currentWorstLapRecordIndex]
+      ? 0
+      : currentWorstLapRecordIndex
+  }
+
+  return 0
+}
+
 export default function StopWatch() {
   const {
     timePassed,
@@ -26,6 +52,8 @@ export default function StopWatch() {
     updateLapStartTime,
   } = useTimer()
   const [lapsRecordList, setLapsRecordList] = useState<number[]>([])
+  const [bestLapRecordIndex, setBestLapRecordIndex] = useState<number>(-1)
+  const [worstLapRecordIndex, setWorstLapRecordIndex] = useState<number>(-1)
 
   useEffect(() => {
     if (lapRecord !== 0) {
@@ -57,11 +85,22 @@ export default function StopWatch() {
       case "start":
       case "restart":
         updateLapStartTime()
+        const currentBestLapRecordIndex = getBestLapRecordIndex(
+          lapsRecordList,
+          bestLapRecordIndex
+        )
+        const currentWorstLapRecordIndex = getWorstLapRecordIndex(
+          lapsRecordList,
+          worstLapRecordIndex
+        )
         setLapsRecordList([0, ...lapsRecordList])
+        setBestLapRecordIndex(currentBestLapRecordIndex + 1)
+        setWorstLapRecordIndex(currentWorstLapRecordIndex + 1)
         break
       case "pause":
         setTimerStateAndTimes("stop")
         setLapsRecordList([])
+        setBestLapRecordIndex(-1)
         break
     }
   }
@@ -74,7 +113,11 @@ export default function StopWatch() {
         handleLapResetClick={handleLapResetClick}
         timerState={timerState}
       />
-      <LapsList lapsList={lapsRecordList} />
+      <LapsList
+        lapsList={lapsRecordList}
+        bestLapRecordIndex={bestLapRecordIndex}
+        worstLapRecordIndex={worstLapRecordIndex}
+      />
     </Container>
   )
 }
