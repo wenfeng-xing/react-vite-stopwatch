@@ -101,6 +101,7 @@ export default function StopWatch() {
         setTimerStateAndTimes("stop")
         setLapsRecordList([])
         setBestLapRecordIndex(-1)
+        setWorstLapRecordIndex(-1)
         break
     }
   }
