@@ -1,41 +1,29 @@
-export type internalState = "stop" | "start" | "pause" | "restart"
-
-export interface timerStatesType {
-  timerState: internalState
+export interface TimerPropsType {
+  currentTime: number
+  elapsedTime: number
+  lapStartTime: number
 }
 
-export type timerActionType = "startStopButtonClick" | "lapResetButtonClick"
+export type TimerActionType = "RESET_ALL_STATE" | "UPDATE_CURRENTTIME" | "UPDATE_ELAPSEDTIME" | "UPDATE_LAPSTARTTIME"
 
-export interface timerAction {
-  type: timerActionType
+export interface TimerActionPropsType {
+  type: TimerActionType
+  payload: number
 }
 
-export const initialState: timerStatesType = {timerState: "stop"}
+export const initialTime: TimerPropsType = {currentTime: 0, elapsedTime: 0, lapStartTime: 0}
 
-export function reducer(state: timerStatesType, action: timerAction): timerStatesType {
+export const reducer = (state: TimerPropsType, action: TimerActionPropsType): TimerPropsType => {
   switch (action.type) {
-    case "startStopButtonClick":
-      switch (state.timerState) {
-        case "stop":
-          return {timerState: "start"}
-        case "start":
-          return {timerState: "pause"}
-        case "pause":
-          return {timerState: "restart"}
-        case "restart":
-          return {timerState: "pause"}
-      }
-  case "lapResetButtonClick":
-    switch (state.timerState) {
-      case "stop":
-        return state
-      case "start":
-        return state
-      case "pause":
-        return {timerState: "stop"}
-      case "restart":
-        return state
-    }
-    break
+    case "RESET_ALL_STATE":
+      return {currentTime: 0, elapsedTime: 0, lapStartTime: 0}
+    case "UPDATE_CURRENTTIME":
+      return {...state, currentTime: action.payload}
+    case "UPDATE_ELAPSEDTIME":
+      return {...state, elapsedTime: action.payload}
+    case "UPDATE_LAPSTARTTIME":
+      return {...state, lapStartTime: action.payload}
+    default:
+      throw new Error("The action type does not existe.")
   }
 }
