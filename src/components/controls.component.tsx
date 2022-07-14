@@ -42,12 +42,16 @@ const LeftButton = styled(BasicButton)`
   }
 `
 
-const RightButton = styled(BasicButton)`
+interface RightButtonProps {
+  rightButtonColor: string
+}
+
+const RightButton = styled(BasicButton)<RightButtonProps>`
   & {
     outline: rgb(49, 33, 7) solid 2px;
     border: 3px solid black;
     background-color: rgb(49, 33, 7);
-    color: rgb(221, 87, 81);
+    color: ${(props) => props.rightButtonColor};
   }
   &:hover {
     background-color: rgb(79, 63, 37);
@@ -81,7 +85,12 @@ export default function Controls({
       <LeftButton onClick={handleLapResetClick}>
         {getButtonLapsOrReset(timerState)}
       </LeftButton>
-      <RightButton onClick={handleStartStopClick}>
+      <RightButton
+        onClick={handleStartStopClick}
+        rightButtonColor={
+          getButtonStartOrStop(timerState) === "Start" ? "green" : "red"
+        }
+      >
         {getButtonStartOrStop(timerState)}
       </RightButton>
     </WrapperControls>
