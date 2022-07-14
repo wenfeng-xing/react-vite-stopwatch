@@ -35,6 +35,7 @@ interface LapElementProps {
 const LapElement = styled.div<LapElementProps>`
   & {
     font-size: 1rem;
+    font-weight: bold;
     flex: 0 0 2rem;
     width: 350px;
     border-top: white 0.1px solid;
